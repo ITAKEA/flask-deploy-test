@@ -1,53 +1,16 @@
-name: Build and Deploy to Azure Linux VM
+name: ci
 
 on:
   push:
-    branches:
-      - master
+    branches: master
 
 jobs:
-  build:
+  login:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3
-
-      - name: 'Login to Docker Hub'
-        uses: docker/login-action@v1
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: 'Build Docker Image'
-        run: docker build . -t clbo/myapp:${{ github.sha }}
-
-      - name: 'Push Docker Image'
-        run: docker push clbo/myapp:${{ github.sha }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: 'Set up Node.js 20'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3
-
-      - name: 'Install SSH Key'
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: 'Deploy to Azure VM'
-        run: |
-          ssh -o StrictHostKeyChecking=no azureuser@52.169.211.207 << 'EOF'
-            docker pull clbo/myapp:${{ github.sha }}
-            docker stop myapp || true
-            docker rm myapp || true
-            docker run -d --name myapp -p 80:80 clbo/myapp:${{ github.sha }}
-          EOF
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
