@@ -20,10 +20,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: 'Build Docker Image'
-        run: docker build . -t your_dockerhub_username/your_docker_image:${{ github.sha }}
+        run: docker build . -t clbo/myapp:${{ github.sha }}
 
       - name: 'Push Docker Image'
-        run: docker push your_dockerhub_username/your_docker_image:${{ github.sha }}
+        run: docker push clbo/myapp:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,9 +40,9 @@ jobs:
 
       - name: 'Deploy to Azure VM'
         run: |
-          ssh -o StrictHostKeyChecking=no your-username@your-vm-public-ip << 'EOF'
-            docker pull your_dockerhub_username/your_docker_image:${{ github.sha }}
+          ssh -o StrictHostKeyChecking=no azureuser@52.169.211.207 << 'EOF'
+            docker pull clbo/myapp:${{ github.sha }}
             docker stop myapp || true
             docker rm myapp || true
-            docker run -d --name myapp -p 80:80 your_dockerhub_username/your_docker_image:${{ github.sha }}
+            docker run -d --name myapp -p 80:80 clbo/myapp:${{ github.sha }}
           EOF
