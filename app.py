@@ -9,3 +9,7 @@ def hello_world():
 @app.route('/post')
 def greeting():
         return "<p>Hello, post!</p>"
+
+@app.route('/hello/<name>')
+def hello(name):
+    return f'Hello, {name}!'
