@@ -11,5 +11,5 @@ def greeting():
         return "<p>Hello, post!</p>"
 
 @app.route('/hello/<name>')
-def hello(name):
+def hello(name='world'):
     return f'Hello, {name}!'
