@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_666b31fb02a84a79aad2597887445b99 }}/clbo/flask_deploy_test:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_666b31fb02a84a79aad2597887445b99 }}/clbo/flask_deploy_test:x86_64}
         file: ./Dockerfile
 
   deploy:
