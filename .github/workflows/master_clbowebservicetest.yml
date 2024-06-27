@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_769bda1c2cc742b3bf4d833a9a3b98f7 }}/clbo/flask_deploy_test:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_769bda1c2cc742b3bf4d833a9a3b98f7 }}/flask_deploy_test:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'clbowebservicetest'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_2d1ba751f4334bf08e26d8a85b0134a7 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_769bda1c2cc742b3bf4d833a9a3b98f7 }}/clbo/flask_deploy_test:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_769bda1c2cc742b3bf4d833a9a3b98f7 }}/flask_deploy_test:${{ github.sha }}'
