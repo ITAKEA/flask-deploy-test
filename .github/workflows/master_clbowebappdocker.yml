@@ -32,6 +32,7 @@ jobs:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_fc519b60aa7a4016bac7b5f29e0e358c }}/flask_deploy_test:${{ github.sha }}
         file: ./Dockerfile
+        platforms: linux/amd64,linux/arm64/v8
 
   deploy:
     runs-on: ubuntu-latest
